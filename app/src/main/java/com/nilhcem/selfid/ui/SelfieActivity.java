@@ -1,8 +1,9 @@
-package com.nilhcem.selfid.ui.selfie;
+package com.nilhcem.selfid.ui;
 
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import static android.hardware.Camera.CameraInfo;
 public class SelfieActivity extends ActionBarActivity {
 
     @InjectView(R.id.selfie_camera_container) ViewGroup mCameraViewContainer;
+    @InjectView(R.id.selfie_frames_layer) ViewPager mFramesViewPager;
 
     private int mCameraId;
     private CameraView mCameraView;
@@ -30,6 +32,7 @@ public class SelfieActivity extends ActionBarActivity {
         setContentView(R.layout.selfie);
         ButterKnife.inject(this);
         mCameraId = getFrontCameraId();
+        mFramesViewPager.setAdapter(new FramesPagerAdapter(this));
     }
 
     @Override
@@ -61,7 +64,7 @@ public class SelfieActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_take_selfie && mCameraView != null) {
-            mCameraView.takePicture();
+            mCameraView.takePicture(((FramesPagerAdapter) mFramesViewPager.getAdapter()).getDrawableIdAt(mFramesViewPager.getCurrentItem()));
             return true;
         }
         return super.onOptionsItemSelected(item);

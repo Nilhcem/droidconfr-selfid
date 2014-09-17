@@ -1,4 +1,4 @@
-package com.nilhcem.selfid.ui.selfie;
+package com.nilhcem.selfid.ui;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -60,8 +60,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public void takePicture() {
+    public void takePicture(int drawableId) {
         if (mCamera != null) {
+            mPhotoSaver.setCurrentDrawableId(drawableId);
             mCamera.takePicture(null, null, mPhotoSaver);
         }
     }

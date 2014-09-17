@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.selfie.SelfieActivity"
+            android:name=".ui.SelfieActivity"
             android:configChanges="orientation|keyboard|keyboardHidden"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.TranslucentActionBar">

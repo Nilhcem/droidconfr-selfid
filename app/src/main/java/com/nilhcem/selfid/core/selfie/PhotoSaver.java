@@ -21,6 +21,7 @@ import java.util.List;
 public class PhotoSaver implements Camera.PictureCallback {
 
     private final Context mContext;
+    private int mCurrentDrawableId;
 
     public PhotoSaver(Context context) {
         mContext = context;
@@ -32,10 +33,15 @@ public class PhotoSaver implements Camera.PictureCallback {
         Bitmap bitmap = BitmapUtils.fromByteArray(data);
 
         // Get layer
-        Bitmap layer = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.logo_layer);
+        if (mCurrentDrawableId != 0) {
+            Bitmap layer = BitmapFactory.decodeResource(mContext.getResources(), mCurrentDrawableId);
+
+            // Apply layer above photo
+            bitmap = BitmapUtils.overlay(bitmap, layer);
+        }
 
         // Apply layer above photo
-        byte[] result = BitmapUtils.toByteArray(BitmapUtils.overlay(bitmap, layer));
+        byte[] result = BitmapUtils.toByteArray(bitmap);
 
         // Save everything
         File output = FsUtils.generateFileName("generated");
@@ -49,6 +55,10 @@ public class PhotoSaver implements Camera.PictureCallback {
 
         // Twitter share intent
         startTwitterShareIntent(output);
+    }
+
+    public void setCurrentDrawableId(int drawableId) {
+        mCurrentDrawableId = drawableId;
     }
 
     private void startTwitterShareIntent(File file) {
