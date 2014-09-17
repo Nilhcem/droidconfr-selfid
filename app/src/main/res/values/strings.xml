@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Self\'iD</string>
+
+    <!-- Selfie -->
+    <string name="selfie_error_no_camera">Aucune caméra frontale trouvée sur cet appareil</string>
+
 </resources>
