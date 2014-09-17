@@ -3,8 +3,6 @@ package com.nilhcem.selfid;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.nilhcem.selfid.selfid.R;
-
 public class PhotoActivity extends ActionBarActivity {
 
     @Override
