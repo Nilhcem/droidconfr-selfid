@@ -1,0 +1,32 @@
+# temporary files
+*~
+\#*#
+tmp/
+
+# build directory
+build/
+
+# android
+*.ap_
+*.dex
+
+# java
+*.class
+
+# Local configuration file (sdk path, etc)
+local.properties
+project.properties
+
+# intelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+gen-external-apklibs/
+
+# mac / windows
+.DS_Store
+Thumbs.db
+
+# gradle
+.gradle/
