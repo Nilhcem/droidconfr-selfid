@@ -5,6 +5,6 @@
     <!-- Take a Selfie -->
     <item
         android:id="@+id/action_take_selfie"
-        android:title="Take a selfie"
-        app:showAsAction="ifRoom|withText"/>
+        android:title="@string/selfie_take"
+        app:showAsAction="always"/>
 </menu>
