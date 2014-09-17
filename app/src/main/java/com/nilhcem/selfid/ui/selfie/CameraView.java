@@ -6,6 +6,8 @@ import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.nilhcem.selfid.core.selfie.PhotoSaver;
+
 import java.io.IOException;
 
 import timber.log.Timber;
@@ -14,12 +16,14 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Camera mCamera;
     private SurfaceHolder mHolder;
+    private PhotoSaver mPhotoSaver;
 
     public CameraView(Context context, Camera camera) {
         super(context);
         mCamera = camera;
         mHolder = getHolder();
         mHolder.addCallback(this);
+        mPhotoSaver = new PhotoSaver(context);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -50,6 +54,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
             mCamera.release();
             mCamera = null;
         }
+    }
+
+    public void takePicture() {
+        mCamera.takePicture(null, null, mPhotoSaver);
     }
 
     private void startPreview(SurfaceHolder holder) {

@@ -60,10 +60,8 @@ public class SelfieActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_take_selfie) {
-
+        if (item.getItemId() == R.id.action_take_selfie && mCameraView != null) {
+            mCameraView.takePicture();
             return true;
         }
         return super.onOptionsItemSelected(item);
