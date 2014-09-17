@@ -32,7 +32,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        startPreview(holder);
+        if (mCamera != null) {
+            startPreview(holder);
+        }
     }
 
     @Override
@@ -40,8 +42,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         if (mHolder.getSurface() == null) {
             return;
         }
-        mCamera.stopPreview();
-        startPreview(mHolder);
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            startPreview(mHolder);
+        }
     }
 
     @Override
@@ -57,7 +61,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void takePicture() {
-        mCamera.takePicture(null, null, mPhotoSaver);
+        if (mCamera != null) {
+            mCamera.takePicture(null, null, mPhotoSaver);
+        }
     }
 
     private void startPreview(SurfaceHolder holder) {
