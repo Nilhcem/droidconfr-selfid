@@ -38,6 +38,11 @@ public class FramesPagerAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setImageResource(FRAMES[position]);
+
+        // Flip horizontally (front camera acts like a mirror)
+        imageView.setScaleX(-1f);
+        imageView.setScaleY(1f);
+
         container.addView(imageView, 0);
         return imageView;
     }

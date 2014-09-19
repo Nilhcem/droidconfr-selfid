@@ -2,7 +2,6 @@ package com.nilhcem.selfid.ui;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -24,10 +23,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         mHolder = getHolder();
         mHolder.addCallback(this);
         mPhotoSaver = new PhotoSaver(context);
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        }
     }
 
     @Override
