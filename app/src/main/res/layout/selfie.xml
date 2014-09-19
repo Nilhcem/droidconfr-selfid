@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <!-- Camera -->
-    <FrameLayout
-        android:id="@+id/selfie_camera_container"
+    <com.nilhcem.selfid.ui.CameraTextureView
+        android:id="@+id/selfie_camera_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
