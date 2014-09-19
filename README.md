@@ -7,7 +7,7 @@ A simple app that lets you take **awesome** selfies.
 
 Pet Project for the iD.apps selfie contest at the DroidConFR 2014.
 
-Download the apk [here][2] (compatible API 14 and above).
+Download the apk [here][2], compatible with Android 4.0 (API 14) and above.
 
 
 Features
