@@ -24,7 +24,7 @@ public class FsUtils {
     public static File getImagesDir() {
         File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGES_PATH);
         if (!dir.exists() && !dir.mkdirs()) {
-            Timber.w("Can't create directory to save image");
+            Timber.e("Can't create directory to save image");
             return null;
         }
         return dir;

@@ -2,6 +2,9 @@ package com.nilhcem.selfid.core.log;
 
 import timber.log.Timber;
 
+/**
+ * Only log warning + errors
+ */
 public class ReleaseLogTree extends Timber.DebugTree {
 
     @Override
@@ -21,16 +24,6 @@ public class ReleaseLogTree extends Timber.DebugTree {
 
     @Override
     public void i(Throwable t, String message, Object... args) {
-        // Do not log
-    }
-
-    @Override
-    public void w(String message, Object... args) {
-        // Do not log
-    }
-
-    @Override
-    public void w(Throwable t, String message, Object... args) {
         // Do not log
     }
 }
