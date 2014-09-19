@@ -7,7 +7,6 @@ tmp/
 build/
 
 # android
-*.ap_
 *.dex
 
 # java
