@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.nilhcem.selfid.R;
 import com.nilhcem.selfid.ui.widgets.FloatingActionButton;
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,6 +26,7 @@ public class SelfieActivity extends Activity implements View.OnClickListener {
 
     @InjectView(R.id.selfie_camera_container) ViewGroup mCameraViewContainer;
     @InjectView(R.id.selfie_frames_layer) ViewPager mFramesViewPager;
+    @InjectView(R.id.selfie_frames_indicator) CirclePageIndicator mFramesIndicator;
 
     private int mCameraId;
     private CameraView mCameraView;
@@ -38,6 +41,7 @@ public class SelfieActivity extends Activity implements View.OnClickListener {
 
         mCameraId = getFrontCameraId();
         mFramesViewPager.setAdapter(new FramesPagerAdapter(this));
+        mFramesIndicator.setViewPager(mFramesViewPager);
     }
 
     @Override

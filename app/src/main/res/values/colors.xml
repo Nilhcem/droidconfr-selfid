@@ -2,4 +2,10 @@
 <resources>
     <color name="idapps_green">#ff9fc33d</color>
     <color name="idapps_dark_green">#ff618208</color>
+
+    <!-- View Pager Indicator -->
+    <color name="indicator_border">#ff1f2a02</color>
+    <color name="indicator_current">#889fc33d</color>
+    <color name="indicator_other">#449fc33d</color>
+
 </resources>

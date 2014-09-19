@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,4 +16,18 @@
         android:id="@+id/selfie_frames_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <!-- Frames indicator -->
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/selfie_frames_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:padding="4dp"
+        app:fillColor="@color/indicator_current"
+        app:pageColor="@color/indicator_other"
+        app:radius="4dp"
+        app:strokeColor="@color/indicator_border"
+        app:strokeWidth="1dp"
+        tools:background="@color/idapps_green" />
 </FrameLayout>
