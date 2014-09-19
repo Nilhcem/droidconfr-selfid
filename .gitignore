@@ -20,9 +20,6 @@ project.properties
 # intelliJ IDEA
 .idea/
 *.iml
-*.iws
-*.ipr
-gen-external-apklibs/
 
 # mac / windows
 .DS_Store
