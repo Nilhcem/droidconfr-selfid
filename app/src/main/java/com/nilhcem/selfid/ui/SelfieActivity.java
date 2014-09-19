@@ -3,6 +3,7 @@ package com.nilhcem.selfid.ui;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -76,6 +77,12 @@ public class SelfieActivity extends Activity {
     private void hideStatusBar() {
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+
+        // Translucent navigation bar for api 19+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            attrs.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+        }
+
         getWindow().setAttributes(attrs);
     }
 
