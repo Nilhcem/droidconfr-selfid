@@ -2,13 +2,13 @@
 <resources>
 
     <style name="AppTheme.TranslucentActionBar">
-        <item name="windowActionBarOverlay">true</item>
-        <item name="actionBarStyle">@style/TranslucentActionBar</item>
-        <item name="actionMenuTextColor">@color/idapps_dark_green</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/TranslucentActionBar</item>
+        <item name="android:actionMenuTextColor">@color/idapps_dark_green</item>
     </style>
 
     <style name="TranslucentActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent</item>
-        <item name="titleTextStyle">@style/TitleBarTextColor</item>
+        <item name="android:titleTextStyle">@style/TitleBarTextColor</item>
     </style>
 </resources>
