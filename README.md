@@ -237,5 +237,5 @@ The Android source code is under an Apache 2.0 License:
 </pre>
 
 
-[1]: https://raw.githubusercontent.com/Nilhcem/selfid/master/misc/screenshot.png
+[1]: https://raw.githubusercontent.com/Nilhcem/selfid/master/misc/screenshot.jpg
 [2]: https://raw.githubusercontent.com/Nilhcem/selfid/master/misc/selfid.apk
