@@ -1,21 +1,25 @@
 package com.nilhcem.selfid.core.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import timber.log.Timber;
 
 public class FsUtils {
 
+    public static final String IMG_ORIG_SUFFIX = "orig";
+    public static final String IMG_MODIFIED_SUFFIX = "modified";
+    public static final String IMG_FILENAME_PATTERN = "'selfie_'yyyymmddhhmmss'_%s.jpg'";
+
     private static final String IMAGES_PATH = "selfid";
-    private static final String IMAGE_NAME = "selfie_%s_%s.jpg";
-    private static final String IMAGE_NAME_PATTERN = "yyyymmddhhmmss";
 
     private FsUtils() {
         throw new UnsupportedOperationException();
@@ -30,12 +34,21 @@ public class FsUtils {
         return dir;
     }
 
-    public static File generateFileName(String prefix) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(IMAGE_NAME_PATTERN, Locale.US);
-        String fileName = String.format(Locale.US, IMAGE_NAME, dateFormat.format(new Date()), prefix);
-        File imagesDir = getImagesDir();
+    public static File saveBitmap(Bitmap bitmap, String imageName, String imageSuffix, Context context) {
+        // Get images root directory
+        File imagesDir = FsUtils.getImagesDir();
+
         if (imagesDir != null) {
-            return new File(imagesDir, fileName);
+            // Convert bitmap to byte[] and save it to a new file
+            byte[] bitmapData = BitmapUtils.toByteArray(bitmap);
+            String outputFilename = String.format(Locale.US, imageName, imageSuffix);
+            File outputFile = new File(imagesDir, outputFilename);
+
+            if (FsUtils.saveDataToFile(bitmapData, outputFile)) {
+                // Force the MediaScanner to add the file (so it is visible on the gallery)
+                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(outputFile)));
+                return outputFile;
+            }
         }
         return null;
     }

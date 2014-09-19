@@ -5,6 +5,7 @@
     <!-- Selfie Errors -->
     <string name="selfie_error_no_camera">Aucune caméra frontale trouvée sur cet appareil</string>
     <string name="selfie_error_save">Impossible de sauvegarder la photo</string>
+    <string name="selfie_error_take">La prise de photo a échouée</string>
 
     <!-- Twitter share -->
     <string name="twitter_share_intent_chooser_title">Partager…</string>

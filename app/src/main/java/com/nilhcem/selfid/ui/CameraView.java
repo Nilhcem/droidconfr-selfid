@@ -55,7 +55,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    public void takePicture(int drawableId) {
+    public void takePicture(int drawableId) throws RuntimeException {
         if (mCamera != null) {
             mPhotoSaver.setCurrentDrawableId(drawableId);
             mCamera.takePicture(null, null, mPhotoSaver);

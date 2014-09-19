@@ -13,14 +13,23 @@ import android.widget.Toast;
 
 import com.nilhcem.selfid.R;
 import com.nilhcem.selfid.core.utils.BitmapUtils;
-import com.nilhcem.selfid.core.utils.FsUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import static com.nilhcem.selfid.core.utils.FsUtils.IMG_FILENAME_PATTERN;
+import static com.nilhcem.selfid.core.utils.FsUtils.IMG_MODIFIED_SUFFIX;
+import static com.nilhcem.selfid.core.utils.FsUtils.IMG_ORIG_SUFFIX;
+import static com.nilhcem.selfid.core.utils.FsUtils.saveBitmap;
 
 public class PhotoSaver implements Camera.PictureCallback {
 
     private final Context mContext;
+    private final SimpleDateFormat mFileNameFormat = new SimpleDateFormat(IMG_FILENAME_PATTERN, Locale.US);
+
     private int mCurrentDrawableId;
 
     public PhotoSaver(Context context) {
@@ -29,32 +38,31 @@ public class PhotoSaver implements Camera.PictureCallback {
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-        // Get photo from camera
+        String pictureName = mFileNameFormat.format(new Date());
+
+        // Get photo from camera and save original picture
         Bitmap bitmap = BitmapUtils.fromByteArray(data);
-
-        // Get layer
-        if (mCurrentDrawableId != 0) {
-            Bitmap layer = BitmapFactory.decodeResource(mContext.getResources(), mCurrentDrawableId);
-
-            // Apply layer above photo
-            bitmap = BitmapUtils.overlay(bitmap, layer);
-        }
-
-        // Apply layer above photo
-        byte[] result = BitmapUtils.toByteArray(bitmap);
-
-        // Save everything
-        File output = FsUtils.generateFileName("generated");
-        if (output == null || !FsUtils.saveDataToFile(result, output)) {
-            Toast.makeText(mContext, R.string.selfie_error_save, Toast.LENGTH_LONG).show();
+        File savedFile = saveBitmap(bitmap, pictureName, IMG_ORIG_SUFFIX, mContext);
+        if (savedFile == null) {
+            showToastError();
             return;
         }
 
-        // Force the MediaScanner to add the file (so it is visible on the gallery)
-        mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(output)));
+        // Get selected layer and apply it above the original photo
+        if (mCurrentDrawableId != 0) {
+            Bitmap layer = BitmapFactory.decodeResource(mContext.getResources(), mCurrentDrawableId);
+            bitmap = BitmapUtils.overlay(bitmap, layer);
+        }
 
-        // Twitter share intent
-        startTwitterShareIntent(output);
+        // Save modified picture
+        savedFile = saveBitmap(bitmap, pictureName, IMG_MODIFIED_SUFFIX, mContext);
+        if (savedFile == null) {
+            showToastError();
+            return;
+        }
+
+        // Start Twitter share intent
+        startTwitterShareIntent(savedFile);
     }
 
     public void setCurrentDrawableId(int drawableId) {
@@ -82,5 +90,9 @@ public class PhotoSaver implements Camera.PictureCallback {
         } catch (final ActivityNotFoundException e) {
             Toast.makeText(mContext, R.string.twitter_not_found, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showToastError() {
+        Toast.makeText(mContext, R.string.selfie_error_save, Toast.LENGTH_LONG).show();
     }
 }

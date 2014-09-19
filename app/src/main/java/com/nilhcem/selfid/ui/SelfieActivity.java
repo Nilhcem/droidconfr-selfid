@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.nilhcem.selfid.R;
 import com.nilhcem.selfid.ui.widgets.FloatingActionButton;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.PageIndicator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,9 +23,12 @@ import static android.hardware.Camera.CameraInfo;
 
 public class SelfieActivity extends Activity implements View.OnClickListener {
 
-    @InjectView(R.id.selfie_camera_container) ViewGroup mCameraViewContainer;
-    @InjectView(R.id.selfie_frames_layer) ViewPager mFramesViewPager;
-    @InjectView(R.id.selfie_frames_indicator) CirclePageIndicator mFramesIndicator;
+    @InjectView(R.id.selfie_camera_container)
+    ViewGroup mCameraViewContainer;
+    @InjectView(R.id.selfie_frames_layer)
+    ViewPager mFramesViewPager;
+    @InjectView(R.id.selfie_frames_indicator)
+    CirclePageIndicator mFramesIndicator;
 
     private int mCameraId;
     private CameraView mCameraView;
@@ -81,7 +83,12 @@ public class SelfieActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        mCameraView.takePicture(((FramesPagerAdapter) mFramesViewPager.getAdapter()).getDrawableIdAt(mFramesViewPager.getCurrentItem()));
+        try {
+            mCameraView.takePicture(((FramesPagerAdapter) mFramesViewPager.getAdapter()).getDrawableIdAt(mFramesViewPager.getCurrentItem()));
+        } catch (RuntimeException e) {
+            Timber.e(e, "takePicture failed");
+            Toast.makeText(this, R.string.selfie_error_take, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void hideStatusBar() {
