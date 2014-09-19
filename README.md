@@ -3,7 +3,7 @@ Self'iD.apps
 
 ![Screenshot][1]
 
-A simple app that lets you take **awesome** selfies.
+A simple Android app that lets you take **awesome** selfies.
 
 Pet Project for the iD.apps selfie contest at the DroidConFR 2014.
 
