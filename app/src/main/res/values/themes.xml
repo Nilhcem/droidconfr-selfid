@@ -7,7 +7,7 @@
         <item name="android:actionMenuTextColor">@color/idapps_dark_green</item>
     </style>
 
-    <style name="TranslucentActionBar" parent="@style/Widget.AppCompat.ActionBar">
+    <style name="TranslucentActionBar" parent="android:Widget.ActionBar">
         <item name="android:background">@drawable/ab_transparent</item>
         <item name="android:titleTextStyle">@style/TitleBarTextColor</item>
     </style>
