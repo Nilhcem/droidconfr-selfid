@@ -13,10 +13,14 @@ public class FramesPagerAdapter extends PagerAdapter {
     private Context mContext;
 
     private static final int[] FRAMES = new int[]{
-            R.drawable.logo_layer_1,
-            R.drawable.logo_layer_2,
-            R.drawable.logo_layer_3,
-            R.drawable.logo_layer_4
+            R.drawable.frame_01,
+            R.drawable.frame_02,
+            R.drawable.frame_03,
+            R.drawable.frame_04,
+            R.drawable.frame_05,
+            R.drawable.frame_06,
+            R.drawable.frame_07,
+            R.drawable.frame_08
     };
 
     FramesPagerAdapter(Context context) {
@@ -38,11 +42,6 @@ public class FramesPagerAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setImageResource(FRAMES[position]);
-
-        // Flip horizontally (front camera acts like a mirror)
-        imageView.setScaleX(-1f);
-        imageView.setScaleY(1f);
-
         container.addView(imageView, 0);
         return imageView;
     }
