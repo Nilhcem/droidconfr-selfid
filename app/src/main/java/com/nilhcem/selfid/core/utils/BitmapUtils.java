@@ -9,12 +9,16 @@ import java.io.ByteArrayOutputStream;
 
 public class BitmapUtils {
 
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 960;
+
     private BitmapUtils() {
         throw new UnsupportedOperationException();
     }
 
     public static Bitmap fromByteArray(byte[] data) {
-        return BitmapFactory.decodeByteArray(data, 0, data.length);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        return Bitmap.createScaledBitmap(bitmap, WIDTH, HEIGHT, false);
     }
 
     public static byte[] toByteArray(Bitmap bitmap) {
@@ -24,7 +28,7 @@ public class BitmapUtils {
     }
 
     public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Bitmap bmOverlay = Bitmap.createBitmap(WIDTH, HEIGHT, bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);
         canvas.drawBitmap(bmp1, new Matrix(), null);
         canvas.drawBitmap(bmp2, new Matrix(), null);
