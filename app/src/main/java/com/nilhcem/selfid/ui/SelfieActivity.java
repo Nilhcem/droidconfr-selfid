@@ -3,16 +3,16 @@ package com.nilhcem.selfid.ui;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.nilhcem.selfid.R;
+import com.nilhcem.selfid.ui.widgets.FloatingActionButton;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -20,7 +20,7 @@ import timber.log.Timber;
 
 import static android.hardware.Camera.CameraInfo;
 
-public class SelfieActivity extends Activity {
+public class SelfieActivity extends Activity implements View.OnClickListener {
 
     @InjectView(R.id.selfie_camera_container) ViewGroup mCameraViewContainer;
     @InjectView(R.id.selfie_frames_layer) ViewPager mFramesViewPager;
@@ -34,6 +34,7 @@ public class SelfieActivity extends Activity {
         setContentView(R.layout.selfie);
         ButterKnife.inject(this);
         hideStatusBar();
+        createFloatingActionButton();
 
         mCameraId = getFrontCameraId();
         mFramesViewPager.setAdapter(new FramesPagerAdapter(this));
@@ -60,30 +61,38 @@ public class SelfieActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.selfie, menu);
-        return true;
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // Immersive mode
+        if (hasFocus) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+            }
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_take_selfie && mCameraView != null) {
-            mCameraView.takePicture(((FramesPagerAdapter) mFramesViewPager.getAdapter()).getDrawableIdAt(mFramesViewPager.getCurrentItem()));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onClick(View v) {
+        mCameraView.takePicture(((FramesPagerAdapter) mFramesViewPager.getAdapter()).getDrawableIdAt(mFramesViewPager.getCurrentItem()));
     }
 
     private void hideStatusBar() {
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-
-        // Translucent navigation bar for api 19+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            attrs.flags |= WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-        }
-
         getWindow().setAttributes(attrs);
+    }
+
+    private void createFloatingActionButton() {
+        new FloatingActionButton.Builder(this)
+                .withDrawable(getResources().getDrawable(R.drawable.ic_camera))
+                .withButtonColor(getResources().getColor(R.color.idapps_green))
+                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+                .withMargins(0, 0, 32, 16)
+                .create().setOnClickListener(this);
     }
 
     private void bindCameraView() {
